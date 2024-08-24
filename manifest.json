@@ -1,0 +1,40 @@
+{
+  "name": "BibTex2FileName",
+  "version": "1.0.10",
+  "description": "Automatic naming PDF file (to be downloaded) from a selected paper title or BibTex entry with customizable pattern.",
+
+  "background": {
+    "scripts": [
+      "BibTex-0.1.4.min.js",
+      "parseRIS.js",
+      "BibTex2FileNamePatternParser.min.js",
+      "BibTex2FileName.js",
+      "md5.min.js",
+      "background.js"
+    ]
+  },
+
+  "options_page": "options.html",
+
+  "minimum_chrome_version": "20",
+
+  "permissions": [ "clipboardWrite", "contextMenus", "downloads", "downloads.open", "tabs", "file:///*/bibtex2filename-tmp.html", "notifications", "https://scholar.google.com/", "https://scholar.googleusercontent.com/" ],
+
+  "content_scripts": [
+    {
+      "matches": [ "file:///*/bibtex2filename-tmp.html" ],
+      "all_frames": true,
+      "js": [ "content_script.js" ]
+    }
+  ],
+
+  "icons": {
+    "48": "bibtex2filename48.png",
+    "128": "bibtex2filename128.png",
+    "256": "bibtex2filename256.png"
+  },
+  
+  "update_url": "https://bitbucket.org/simbaforrest/myscripts/downloads/bibtex2filename_updates.xml",
+
+  "manifest_version": 2
+}

@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title>BibTex2FileName Options</title>
+  <script src="abbrRules.js"></script>
+  <script src="options.js"></script>
+</head>
+<body>
+
+<h1 id='version'>BibTex 2 FileName</h1>
+<h4><a href="https://simbaforrest.github.io">Contact the Author</a></h4>
+<p>
+This extension lets you convert any selected BibTex entry (or RIS record) to a file name, using the pattern you specified, and copy this converted file name automatically into your clipboard. So you can easily name the paper you are going to download in a consistent way.
+</p>
+<h2>Monitoring newly downloaded .bib/.ris file:</h2>
+<h4 id='fileAccessNote'></h4>
+<p><input type="checkbox" id="monitorOrNot">check this if you want to: automatically monitor downloading .bib/.ris file and save as bibtex2filename-tmp.html (don't rename it!!) so this extension will automatically open it and convert the bibtex entry inside into the file name you want and finally close the newly opened page automatically as well!<br>
+</p>
+<h2>Specify your file name pattern:</h2>
+<p><input type="text" id="pattern"></input></p>
+<button id="setPattern">OK, set the pattern</button>
+<button id="defaultPattern">Reset to default</button>
+<h3>The converted file name will be the pattern you specified above with variables substituted with values parsed from the selected BibTex entry.</h3>
+
+<h3>Examples:</h3>
+<h4><table border="1">
+<tr><th>Pattern</th><th>Meaning</th></tr>
+<tr><td>$Y.$T.pdf</td><td>year.title.pdf</td></tr>
+<tr><td>$Y_$T.pdf</td>
+<td>year_title.pdf</td></tr>
+<tr><td>$Y$T.pdf</td><td>yeartitle.pdf</td></tr>
+<tr><td>$Y.$L.$T.pdf</td><td>year.first-author's-last-name.title.pdf</td></tr>
+<tr><td>$Y$|$A$|$T.pdf</td><td>year|first-author's-full-name|title.pdf</td></tr>
+<tr><td>$Y.$a.$T.pdf</td><td>year.first-author's-full-name's-abbreviation.title.pdf</td></tr>
+<tr><td>$Y.$Ln.$T.pdf</td><td>year.last-author's-last-name.title.pdf</td></tr>
+<tr><td>$Y.$L$f.$T.pdf</td><td>year.last-author's-last-name-and-first-letter-of-first-name.title.pdf</td></tr>
+<tr><td>[$Y|0000][.$B|.$J].$L$f.[$T|TTT].pdf</td><td>year-default-0000.booktitle-or-journal.first-author's-last-name-and-first-letter-of-first-name.title-default-TTT.pdf</td></tr>
+</table></h4>
+
+<h3>The supported variables:</h3>
+<h4><table border="1">
+<tr><th>Variable</th><th>Substitution</th></tr>
+<tr><td>$L</td><td>last name of the first author (with any white space removed)</td></tr>
+<tr><td>$F</td><td>first name of the first author (with any white space removed)</td></tr>
+<tr><td>$A</td><td>$L$F</td></tr>
+<tr><td>$l</td><td>first letter of $L</td></tr>
+<tr><td>$f</td><td>first letter of $F</td></tr>
+<tr><td>$a</td><td>$l$f</td></tr>
+<tr><td>$&lt;A|L|F|a|l|f&gt;[any positive integer|n]</td><td>choose the i-th author, e.g. $L2 means the last name of the third author, if less than three author then use the last author; $An means the full name of the last author</td></tr>
+<tr><td>$Y</td><td>year</td></tr>
+<tr><td>$y</td><td>last two digits of year, if longer than two digits, otherwise $Y</td></tr>
+<tr><td>$T</td><td>title</td></tr>
+<tr><td>$V</td><td>volume</td></tr>
+<tr><td>$I</td><td>issue</td></tr>
+<tr><td>$J</td><td>journal, abbreviated if matched with an abbr. rule stored below</td></tr>
+<tr><td>$B</td><td>booktitle, abbreviated if matched with an abbr. rule stored below</td></tr>
+<tr><td>$P</td><td>pages</td></tr>
+<tr><td>$U</td><td>publisher</td></tr>
+<tr><td>$C</td><td>cite tag of the entry</td></tr>
+<tr><td>$E</td><td>entry type</td></tr>
+<tr><td>$e</td><td>first letter of $E</td></tr>
+<tr><td>$$</td><td>$</td></tr>
+<tr><td>$[</td><td>[</td></tr>
+<tr><td>$]</td><td>]</td></tr>
+<tr><td>$|</td><td>|</td></tr>
+<tr><td>$&amp;</td><td>&amp;</td></tr>
+</table></h4>
+
+<h2>Abbreviation rules for booktitle($B)/journal($J):</h2>
+<h3>case sensitive version abbreviation rule: rule-if -> rule-then</h3>
+<h3>case insensitive version abbreviation rule: rule-if ->i rule-then</h3>
+<h3>note:</h3>
+<h4><ol>
+<li>rule-if is the regular expression for the $B/$J you want to match and rule-then is the literal replacement you want</li>
+<li>-> or ->i will be the last match so rule-if can contain sub-string -> or ->i but rule-then shouldn't contain -> or ->i</li>
+<li>line comment by using '#' at the begin of the line</li>
+</ol></h4>
+<textarea rows="20" cols="80" id="abbrRules">
+.*(cvpr|Computer Vision and Pattern Recognition).* ->i cvpr
+.*icra.* ->i icra
+.*iros.* ->i iros
+.*iccv.* ->i iccv
+.*eccv.* ->i eccv
+.*bmvc.* ->i bmvc
+.*icip.* ->i icip
+.*siggraph.* ->i siggraph
+.* ->
+</textarea><br>
+<button id=setRule>OK, set the rules!</button>
+</body>
+</html>
